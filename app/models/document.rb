@@ -1,6 +1,6 @@
 class Document < ApplicationRecord
     belongs_to :repository
-    has_many :versions
+    has_many :versions, :dependent => :delete_all
     validates :name, :uniqueness => {:scope => :repository_id}
 
     def createVersion

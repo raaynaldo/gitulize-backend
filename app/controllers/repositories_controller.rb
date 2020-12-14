@@ -4,8 +4,11 @@ class RepositoriesController < ApplicationController
   }
 
   def index
-    repos = Repository.all
-    render json: RepositorySerializer.new(repos, @@options)
+    repo = Repository.first
+    if repo == nil
+      repo = Repository.create(name: repo, branch: "")
+    end
+    render json: { documents: repo.documents.as_json(include: { versions: { include: { commit: { methods: :date_to_s } } } }), repo_id: repo.id }
   end
 
   def show
