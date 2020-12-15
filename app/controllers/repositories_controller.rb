@@ -6,7 +6,7 @@ class RepositoriesController < ApplicationController
   def index
     repo = Repository.first
     if repo == nil
-      repo = Repository.create(name: repo, branch: "")
+      repo = Repository.create(name: "repo", branch: "")
     end
     render json: { documents: repo.documents.as_json(include: { versions: { include: { commit: { methods: :date_to_s } } } }), repo_id: repo.id }
   end
